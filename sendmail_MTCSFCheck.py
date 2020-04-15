@@ -18,9 +18,16 @@ for csfList in [checkM1, checkD1, checkE1, checkR2]:
         sliceString = csfList.replace('\\', ' ').replace('_', ' ').replace('.', ' ').split()
         print(sliceString)
         ### Send Email ###
-        sender = 'noreply@mtalert.com'
+        sender = 'donotreply@mtalert.com'
         receivers = ['kevinjames.bajao@infor.com']
-        message = 'Subject: {}\n\n{}'.format(sliceString[4] + ' is down', 'Please check the CSF of the reported stack')
+        if sliceString[4] == 'CSFM1':
+            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFM1 of the reported stack \n\n Update Schedule \n - Monday and Wednesday US Time \n - Friday PH Time with no LMRK Updates')
+        elif sliceString[4] == 'CSFD1':
+            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFD1 of the reported stack \n\n Update Schedule \n - Tuesday and Thursday PH Time')
+        elif sliceString[4] == 'CSFE1':
+            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFE1 of the reported stack \n\n Update Schedule \n - Adhoc Request only')
+        else:
+            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFR2 of the reported stack \n\n Update Schedule \n - Friday PH Time')
         try:
             smtpObj = smtplib.SMTP('mail.infor.com')
             #smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
@@ -29,26 +36,3 @@ for csfList in [checkM1, checkD1, checkE1, checkR2]:
             print("Successfully sent email")
         except SMTPException:
             print("Error: unable to send email")
-
-### File Validation ###
-'''
-if os.path.isfile(checkM1):
-    print('CSFM1 is ok')
-else:
-    print('Send Email')
-
-if os.path.isfile(checkD1):
-    print('CSFD1 is ok')
-else:
-    print('Send Email')
-
-if os.path.isfile(checkE1):
-    print('CSFE1 is ok')
-else:
-    print('Send Email')
-
-if os.path.isfile(checkR2):
-    print('CSFR2 is ok')
-else:
-    print('Send Email')
-'''
