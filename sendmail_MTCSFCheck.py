@@ -1,6 +1,7 @@
 import smtplib
 import os
 
+
 ### Change working dir ###
 directory = "E:\\MTScreenshots"
 checknewdir = max([os.path.join(directory,d) for d in os.listdir(directory)], key=os.path.getmtime)
@@ -18,16 +19,16 @@ for csfList in [checkM1, checkD1, checkE1, checkR2]:
         sliceString = csfList.replace('\\', ' ').replace('_', ' ').replace('.', ' ').split()
         print(sliceString)
         ### Send Email ###
-        sender = 'donotreply@mtalert.com'
+        sender = 'USEM-CLOUD-Internal-Notifications@infor.com'
         receivers = ['kevinjames.bajao@infor.com']
         if sliceString[4] == 'CSFM1':
-            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFM1 of the reported stack \n\n Update Schedule \n - Monday and Wednesday US Time \n - Friday PH Time with no LMRK Updates')
+            message = 'Subject: {}\n\n{}'.format('CSF is inaccessible on ' + sliceString[4] + ' stack', 'Please check the CSF of the reported stack \n\n Please refer to the Weekly Scheduled Updates below for reference \n - Monday and Wednesday US Time \n - Friday PH Time with no LMRK Updates')
         elif sliceString[4] == 'CSFD1':
-            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFD1 of the reported stack \n\n Update Schedule \n - Tuesday and Thursday PH Time')
+            message = 'Subject: {}\n\n{}'.format('CSF is inaccessible on ' + sliceString[4] + ' stack', 'Please check the CSF of the reported stack \n\n Please refer to the Weekly Scheduled Updates below for reference \n - Tuesday and Thursday PH Time')
         elif sliceString[4] == 'CSFE1':
-            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFE1 of the reported stack \n\n Update Schedule \n - Adhoc Request only')
+            message = 'Subject: {}\n\n{}'.format('CSF is inaccessible on ' + sliceString[4] + ' stack', 'Please check the CSF of the reported stack \n\n Please refer to the Weekly Scheduled Updates below for reference \n - Adhoc Request only')
         else:
-            message = 'Subject: {}\n\n{}'.format('CSF in ' + sliceString[4] + ' is not accessible', 'Please check the CSFR2 of the reported stack \n\n Update Schedule \n - Friday PH Time')
+            message = 'Subject: {}\n\n{}'.format('CSF is inaccessible on ' + sliceString[4] + ' stack', 'Please check the CSF of the reported stack \n\n Please refer to the Weekly Scheduled Updates below for reference \n - Friday PH Time')
         try:
             smtpObj = smtplib.SMTP('mail.infor.com')
             #smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
